@@ -23,8 +23,28 @@ app.get("/", function (req, res) {
 app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
+    //:date? двоеточие говорит что после /api/ будет вычисляемое значение ? говорит что оно не обязательное
+    app.get("/api/:date?" , (req,res,) => {
 
 
+        if(new Date(req.params.date) != "Invalid Date" && new Date(req.params.date) != ""){
+
+          res.json({"unix" : Date.parse(new Date(req.params.date)), "utc" : new Date(req.params.date).toUTCString()})
+
+        }else if(Number(req.params.date) && Number(req.params.date) > 0){
+
+          res.json({"unix" : Number(req.params.date), "utc" : new Date(Number(req.params.date)).toUTCString()})
+
+        }else if(isNaN(new Date(req.params.date).getTime()) && req.params.date != undefined ){
+          
+          res.json({ error : "Invalid Date" })
+          
+        }else if(req.params.date == undefined && isNaN(new Date(req.params.date).getTime())){
+          
+          res.json({"unix" : Date.parse(new Date()), "utc" : new Date().toUTCString()})
+
+        }
+    })
 
 // Listen on port set in environment variable or default to 3000
 var listener = app.listen(process.env.PORT || 3000, function () {
