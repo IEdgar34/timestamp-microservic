@@ -23,7 +23,7 @@ app.get("/", function (req, res) {
 app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
-    //:date? двоеточие говорит что после /api/ будет вычисляемое значение ? говорит что оно не обязательное
+    
     app.get("/api/:date?" , (req,res,) => {
 
 
